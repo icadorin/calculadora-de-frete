@@ -1,8 +1,10 @@
+[build]
+path = "backend-calculadora-de-frete"
+
 [phases.setup]
-nixPkgs = ["openjdk"]
+nixPkgs = ["jdk21", "maven"]
 
-        [phases.build]
-cmds = ["./mvnw clean package -DskipTests"]
-
-        [start]
-cmd = "java -jar target/*.jar"
+[phases.build]
+commands = [
+    "mvn clean package -DskipTests -Dfile.encoding=UTF-8"
+]
