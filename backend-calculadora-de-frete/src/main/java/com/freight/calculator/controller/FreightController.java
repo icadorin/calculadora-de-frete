@@ -18,7 +18,7 @@ public class FreightController {
     public FreightController(FreightCalculationService service) {
         this.service = service;
     }
-    
+
     @PostMapping("/")
     public ResponseEntity<FreightCalculationResponse> calculateFreight(
             @RequestBody @Valid FreightCalculationRequest request
