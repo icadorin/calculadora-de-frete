@@ -1,0 +1,5 @@
+[build]
+path = "backend-calculadora-de-frete"
+
+[phases.setup]
+nixPkgs = ["jdk21"]
