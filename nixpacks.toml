@@ -2,7 +2,7 @@
 path = "backend-calculadora-de-frete"
 
 [phases.setup]
-nixPkgs = ["jdk21", "maven"]
+nixPkgs = ["jdk20", "maven"]
 
 [phases.build]
 commands = [
