@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.freight.calculator.service.FreightCalculationService;
 
 @RestController
-@RequestMapping("${app.api.base-path}${app.api.frete-path}")
+@RequestMapping("${APP_API_BASE_PATH}${APP_API_FRETE_PATH}")
 public class FreightController {
 
     private final FreightCalculationService freightCalculationService;
