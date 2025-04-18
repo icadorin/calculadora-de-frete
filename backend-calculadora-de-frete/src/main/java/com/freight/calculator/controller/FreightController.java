@@ -14,18 +14,12 @@ import com.freight.calculator.service.FreightCalculationService;
 public class FreightController {
 
     private final FreightCalculationService service;
-    private final String basePath;
 
-    public FreightController(
-            FreightCalculationService service,
-            @Value("${APP_API_BASE_PATH:/api}") String basePath,
-            @Value("${APP_API_FRETE_PATH:/frete}") String fretePath
-    ) {
+    public FreightController(FreightCalculationService service) {
         this.service = service;
-        this.basePath = basePath + fretePath;
     }
-
-    @PostMapping("/calcular")
+    
+    @PostMapping("/")
     public ResponseEntity<FreightCalculationResponse> calculateFreight(
             @RequestBody @Valid FreightCalculationRequest request
     ) {

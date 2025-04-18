@@ -17,7 +17,7 @@ export default function FreightCalculator() {
 
     setLoading(true);
     try {
-      const response = await axios.post(`${API_FULL_URL}/calcular`, {
+      const response = await axios.post(`${API_FULL_URL}`, {
         cep: cep.replace(/\D/g, '')
       });
       setFreightCost(response.data.freightCost);
