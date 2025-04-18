@@ -3,7 +3,7 @@
 API Spring Boot que calcula frete baseado no CEP.
 
 ## 🛠️ Tecnologias Principais
-- **Java 21**
+- **Java 17**
 - **Spring Boot 3.4.4**
   - Spring Web
   - Spring Validation
@@ -12,7 +12,7 @@ API Spring Boot que calcula frete baseado no CEP.
 
 ## 🌐 Sobre a API
 - **Tipo**: RESTful JSON
-- **Endpoint**: `POST /api/frete/calcular`
+- **Endpoint**: `POST /`
 - **Request**:
   ```json  
   { "cep": "01001000" }  
