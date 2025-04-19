@@ -1,41 +1,45 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_FULL_URL } from '../config/api';
+
+type FreightResponse = {
+  freightCost: number;
+};
 
 export default function FreightCalculator() {
   const [cep, setCep] = useState('');
   const [freightCost, setFreightCost] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+
   const isValidCep = (cep: string) => /^\d{8}$/.test(cep.replace(/\D/g, ''));
 
-  const handleCalculate = async () => {
+  const handleCalculate = async (): Promise<void> => {
     const cleanedCep = cep.replace(/\D/g, '');
     if (!isValidCep(cleanedCep)) {
       alert('Por favor, insira um CEP válido com 8 números.');
       return;
     }
+
     setLoading(true);
 
     try {
-      for (const url of API_FULL_URL) {
-        try {
-          const response = await axios.post(url, { cep: cleanedCep });
-          setFreightCost(response.data.freightCost);
-          setLoading(false);
-          return;
-        } catch (error) {
-          console.log(`Erro na requisição para ${url}:`, error);
-        }
-      }
+      const requests: Array<Promise<AxiosResponse<FreightResponse>>> = API_FULL_URL.map(
+        (url: string) => axios.post<FreightResponse>(url, { cep: cleanedCep })
+      );
 
-      alert('Falha na URL.');
-    } catch (error) {
-      let errorMessage = "Erro ao calcular frete";
-      if (axios.isAxiosError(error)) {
+      const response = await Promise.any(requests);
+      setFreightCost(response.data.freightCost);
+    } catch (error: unknown) {
+      let errorMessage = 'Erro ao calcular frete';
+
+      if (error instanceof AggregateError) {
+        errorMessage = 'Tente novamente mais tarde (urls).';
+      } else if (axios.isAxiosError(error)) {
         errorMessage = error.response?.data?.message || error.message;
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }
+
       alert(errorMessage);
     } finally {
       setLoading(false);
