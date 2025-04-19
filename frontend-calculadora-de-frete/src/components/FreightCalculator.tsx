@@ -14,22 +14,28 @@ export default function FreightCalculator() {
       alert('Por favor, insira um CEP válido com 8 números.');
       return;
     }
-
     setLoading(true);
+
     try {
-      const response = await axios.post(`${API_FULL_URL}`, {
-        cep: cep.replace(/\D/g, '')
-      });
-      setFreightCost(response.data.freightCost);
+      for (const url of API_FULL_URL) {
+        try {
+          const response = await axios.post(url, { cep: cleanedCep });
+          setFreightCost(response.data.freightCost);
+          setLoading(false);
+          return;
+        } catch (error) {
+          console.log(`Erro na requisição para ${url}:`, error);
+        }
+      }
+
+      alert('Falha na URL.');
     } catch (error) {
       let errorMessage = "Erro ao calcular frete";
-
       if (axios.isAxiosError(error)) {
         errorMessage = error.response?.data?.message || error.message;
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }
-
       alert(errorMessage);
     } finally {
       setLoading(false);
