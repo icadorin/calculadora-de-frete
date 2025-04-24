@@ -33,13 +33,17 @@ export default function FreightCalculator() {
       let errorMessage = 'Erro ao calcular frete';
 
       if (error instanceof AggregateError) {
-        errorMessage = 'Tente novamente mais tarde (urls).';
+        errorMessage = 'Não foi possível calcular o frete no momento. O backend está hospedado em ' +
+          'duas plataformas com recursos limitados e ambas estão indisponíveis. Por favor, tente novamente mais tarde.';
       } else if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || error.message;
+        if (error.code === 'ECONNABORTED' || error.message.includes('Network Error')) {
+          errorMessage = 'Servidor indisponível. Tente novamente mais tarde.';
+        } else {
+          errorMessage = error.response?.data?.message || error.message;
+        }
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }
-
       alert(errorMessage);
     } finally {
       setLoading(false);
