@@ -3,7 +3,7 @@
 Aplicação simples desenvolvida com Java e Spring Boot para calcular o frete. A API ViaCEP será consumida e aplicada uma lógica própria para definir o valor do frete conforme o estado.
 
 ## 🌐 Acesso
-- **Frontend (Vercel)**: [ https://calcular-frete-prj.vercel.app ].
+- **Frontend (Vercel)**: [ https://calcular-frete-ic.vercel.app ].
 
 ## 🧠 Como funciona
 
